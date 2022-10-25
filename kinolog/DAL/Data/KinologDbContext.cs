@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL.Data
 {
     public class KinologDbContext : DbContext
-    {
+    {        
+
+
         public KinologDbContext(DbContextOptions<KinologDbContext> options)
             : base(options)
         {
@@ -37,8 +39,8 @@ namespace DAL.Data
                 entity.ToTable("User");
                 entity.HasOne(g => g.Gender)
                 .WithMany(u => u.Users);
-                //entity.HasMany(r => r.Ratings)
-                //.WithOne(u => u.Users);
+                entity.HasMany(r => r.Ratings)
+                .WithOne(u => u.User);
             });
 
                 
