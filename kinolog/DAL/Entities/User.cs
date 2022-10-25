@@ -6,7 +6,7 @@
         public string? Email { get; set; }
         public int GenderId { get; set; }
         public DateTime BirthDate { get; set; }
-        public IEnumerable<Rating>? Ratings { get; set; }
         public Gender? Gender { get; set; }
+        public IEnumerable<Rating>? MoviesRatings{ get; set; }
     }
 }

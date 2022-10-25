@@ -5,5 +5,6 @@
         public Guid MovieId { get; set; }
         public Guid CreatorId{ get; set; }
         public int PositionId { get; set; }
+        public Position? Position { get; set; }
     }
 }
