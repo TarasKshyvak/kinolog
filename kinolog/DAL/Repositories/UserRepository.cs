@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class CountryRepository : ICountryRepository
+    public class UserRepository : IUserRepository
     {
 
     }
