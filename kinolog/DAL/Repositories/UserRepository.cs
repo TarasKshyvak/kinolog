@@ -12,6 +12,7 @@ namespace DAL.Repositories
         {
             _context = kinologDbContext;
         }
+
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _context.Users.ToListAsync();
@@ -19,7 +20,10 @@ namespace DAL.Repositories
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users
+                .Include(c => c.Gender)
+                .Include(r => r.MoviesRatings)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(User user)
