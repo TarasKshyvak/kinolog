@@ -13,7 +13,6 @@ namespace DAL.Repositories
             _context = kinologDbContext;
         }
 
-
         public async Task<IEnumerable<Creator>> GetAllAsync()
         {
             return await _context.Creators.ToListAsync();
@@ -26,6 +25,7 @@ namespace DAL.Repositories
                 .Include(m => m.Movies)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
+        
         public async Task AddAsync(Creator creator)
         {
             await _context.AddAsync(creator);

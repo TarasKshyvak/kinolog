@@ -13,7 +13,6 @@ namespace DAL.Repositories
             _context = kinologDbContext;
         }
 
-
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _context.Movies.ToListAsync();

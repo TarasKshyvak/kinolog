@@ -13,7 +13,6 @@ namespace DAL.Repositories
             _context = kinologDbContext;
         }
 
-
         public async Task<IEnumerable<Country>> GetAllAsync()
         {
             return await _context.Countries.ToListAsync();
