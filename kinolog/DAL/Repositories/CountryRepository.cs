@@ -13,7 +13,6 @@ namespace DAL.Repositories
             _context = kinologDbContext;
         }
 
-
         public async Task<IEnumerable<Country>> GetAllAsync()
         {
             return await _context.Countries.ToListAsync();
@@ -21,8 +20,11 @@ namespace DAL.Repositories
 
         public async Task<Country> GetByIdAsync(Guid id)
         {
-            return await _context.Countries.FindAsync(id);
+            return await _context.Countries
+                .Include(c => c.Creators)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
+
         public async Task AddAsync(Country country)
         {
             await _context.AddAsync(country);

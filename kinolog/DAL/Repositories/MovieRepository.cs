@@ -13,7 +13,6 @@ namespace DAL.Repositories
             _context = kinologDbContext;
         }
 
-
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _context.Movies.ToListAsync();
@@ -23,6 +22,7 @@ namespace DAL.Repositories
         {
             return await _context.Movies.FindAsync(id);
         }
+
         public async Task AddAsync(Movie movie)
         {
             await _context.AddAsync(movie);
@@ -38,7 +38,6 @@ namespace DAL.Repositories
             var m = await GetByIdAsync(id);
             _context.Movies.Remove(m);
         }
-
         public void Update(Movie movie)
         {
             _context.Movies.Update(movie);

@@ -12,8 +12,6 @@ namespace DAL.Repositories
         {
             _context = kinologDbContext;
         }
-
-
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _context.Users.ToListAsync();
@@ -23,6 +21,7 @@ namespace DAL.Repositories
         {
             return await _context.Users.FindAsync(id);
         }
+
         public async Task AddAsync(User user)
         {
             await _context.AddAsync(user);
