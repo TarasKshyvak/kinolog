@@ -21,8 +21,13 @@ namespace DAL.Repositories
 
         public async Task<Movie> GetByIdAsync(Guid id)
         {
-            return await _context.Movies.FindAsync(id);
+            return await _context.Movies
+                .Include(m => m.Genres)
+                .Include(m => m.UsersRatings)
+                .Include(m => m.Creators)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
+
         public async Task AddAsync(Movie movie)
         {
             await _context.AddAsync(movie);
