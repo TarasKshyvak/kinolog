@@ -2,7 +2,7 @@
 {
     public class Country : BaseEntity
     {
-        public string? Name { get; set; }
-        public IEnumerable<Creator>? Creators { get; set; }
+        public string Name { get; set; } = null!;
+        public IEnumerable<Creator> Creators { get; set; } = null!;
     }
 }

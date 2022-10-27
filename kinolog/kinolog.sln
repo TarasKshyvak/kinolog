@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kinolog", "kinolog\kinolog.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{E9486CD0-5630-4226-B663-95F6CA74173F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{0DD6827C-0822-4D3F-9DB4-71ADF30D4E84}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9486CD0-5630-4226-B663-95F6CA74173F} = {E9486CD0-5630-4226-B663-95F6CA74173F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,10 @@ Global
 		{E9486CD0-5630-4226-B663-95F6CA74173F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9486CD0-5630-4226-B663-95F6CA74173F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9486CD0-5630-4226-B663-95F6CA74173F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DD6827C-0822-4D3F-9DB4-71ADF30D4E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DD6827C-0822-4D3F-9DB4-71ADF30D4E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DD6827C-0822-4D3F-9DB4-71ADF30D4E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DD6827C-0822-4D3F-9DB4-71ADF30D4E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
