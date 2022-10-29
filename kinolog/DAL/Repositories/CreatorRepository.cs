@@ -47,5 +47,10 @@ namespace DAL.Repositories
             _context.Creators.Update(creator);
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

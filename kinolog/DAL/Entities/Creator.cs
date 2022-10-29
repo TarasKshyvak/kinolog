@@ -7,5 +7,9 @@
         public Guid CountryId { get; set; }
         public IEnumerable<Movie> Movies { get; set; } = null!;
         public Country Country { get; set; } = null!;
+        public string GetFullName()
+        {
+            return $"{this.FirstName} {this.LastName}";
+        }
     }
 }
