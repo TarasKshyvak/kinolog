@@ -46,5 +46,10 @@ namespace DAL.Repositories
             _context.Countries.Update(country);
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

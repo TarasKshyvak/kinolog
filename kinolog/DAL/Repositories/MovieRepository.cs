@@ -39,13 +39,18 @@ namespace DAL.Repositories
 
         public async Task DeleteByIdAsync(Guid id)
         {
-            var m = await GetByIdAsync(id);
-            _context.Movies.Remove(m);
+            var movie = await GetByIdAsync(id);
+            _context.Movies.Remove(movie);
         }
 
         public void Update(Movie movie)
         {
             _context.Movies.Update(movie);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
     }
