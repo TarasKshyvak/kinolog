@@ -33,6 +33,16 @@ namespace BLL
                 .ForMember(cm => cm.Country, opts =>
                     opts.MapFrom(c => c.Country.Name))
                 .ReverseMap();
+
+            CreateMap<User, UserModel>()
+                .ForMember(um => um.Gender, opts =>
+                    opts.MapFrom(g => g.Gender.Name))
+                .ReverseMap();
+
+            CreateMap<Country, CountryModel>()
+                .ForMember(gm => gm.CreatorsIds, opts =>
+                    opts.MapFrom(g => g.Creators.Select(m => m.Id)))
+                .ReverseMap();
         }
     }
 }
