@@ -32,6 +32,7 @@ namespace BLL.Services
             ArgumentNullException.ThrowIfNull(entity);
 
             await _movieRepository.DeleteByIdAsync(modelId);
+            await _movieRepository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<MovieModel>> GetAllAsync()
