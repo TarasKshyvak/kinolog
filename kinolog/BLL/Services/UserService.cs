@@ -1,33 +1,59 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
 using BLL.Models;
+using DAL.Data;
+using DAL.Entities;
+using DAL.Repositories;
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        public Task AddAsync(UserModel model)
+        private readonly IMapper _mapper;
+        private readonly UserRepository _userRepository;
+
+
+        public UserService(KinologDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _userRepository = new UserRepository(context);
         }
 
-        public Task DeleteAsync(Guid modelId)
+        public async Task AddAsync(UserModel model)
         {
-            throw new NotImplementedException();
+            ArgumentNullException.ThrowIfNull(model);
+            var entity = _mapper.Map<User>(model);
+
+            await _userRepository.AddAsync(entity);
+            await _userRepository.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<UserModel>> GetAllAsync()
+        public async Task DeleteAsync(Guid modelId)
         {
-            throw new NotImplementedException();
+            var entity = await _userRepository.GetByIdAsync(modelId);
+            ArgumentNullException.ThrowIfNull(entity);
+
+            await _userRepository.DeleteByIdAsync(modelId);
+            await _userRepository.SaveChangesAsync();
         }
 
-        public Task<UserModel> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<UserModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<UserModel>>(await _userRepository.GetAllAsync());
         }
 
-        public Task UpdateAsync(UserModel model)
+        public async Task<UserModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserModel>(await _userRepository.GetByIdAsync(id));
+        }
+
+        public async Task UpdateAsync(UserModel model)
+        {
+            ArgumentNullException.ThrowIfNull(model);
+
+            var entity = await _userRepository.GetByIdAsync(model.Id);
+            _userRepository.Update(entity);
+            await _userRepository.SaveChangesAsync();
         }
     }
 }
