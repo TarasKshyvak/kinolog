@@ -41,10 +41,7 @@ namespace BLL.Services
 
         public async Task<MovieModel> GetByIdAsync(Guid id)
         {
-            var movie = await _movieRepository.GetByIdAsync(id);
-            ArgumentNullException.ThrowIfNull(movie);
-
-            return _mapper.Map<MovieModel>(movie);
+            return _mapper.Map<MovieModel>(await _movieRepository.GetByIdAsync(id));
         }
 
         public async Task UpdateAsync(MovieModel model)
