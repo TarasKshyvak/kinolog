@@ -1,11 +1,6 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kinolog.Controllers
 {
@@ -22,7 +17,7 @@ namespace kinolog.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieModel>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<MovieModel>>> GetAll()
         {
             return (await _movieService.GetAllAsync()).ToList();
         }
@@ -34,7 +29,7 @@ namespace kinolog.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddAsync([FromBody] MovieModel model)
+        public async Task<ActionResult> Add([FromBody] MovieModel model)
         {
             await _movieService.AddAsync(model);
             return Ok(model);
@@ -49,7 +44,7 @@ namespace kinolog.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
             await _movieService.DeleteAsync(id);
             return Ok();
