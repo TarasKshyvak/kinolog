@@ -2,43 +2,57 @@
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
+using DAL.Entities;
+using DAL.Repositories;
 
 namespace BLL.Services
 {
     public class CreatorService : ICreatorService
     {
-        private readonly KinologDbContext context;
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
+        private readonly CreatorRepository _creatorRepository;
 
         public CreatorService(KinologDbContext context, IMapper mapper)
         {
-            this.context = context;
-            this.mapper = mapper;
+            _mapper = mapper;
+            _creatorRepository = new CreatorRepository(context);
         }
 
-        public Task AddAsync(CreatorModel model)
+        public async Task AddAsync(CreatorModel model)
         {
-            throw new NotImplementedException();
+            ArgumentNullException.ThrowIfNull(model);
+            var entity = _mapper.Map<Creator>(model);
+
+            await _creatorRepository.AddAsync(entity);
+            await _creatorRepository.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(Guid modelId)
+        public async Task DeleteAsync(Guid modelId)
         {
-            throw new NotImplementedException();
+            var entity = await _creatorRepository.GetByIdAsync(modelId);
+            ArgumentNullException.ThrowIfNull(entity);
+
+            await _creatorRepository.DeleteByIdAsync(modelId);
+            await _creatorRepository.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<CreatorModel>> GetAllAsync()
+        public async Task<IEnumerable<CreatorModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<CreatorModel>>(await _creatorRepository.GetAllAsync());
         }
 
-        public Task<CreatorModel> GetByIdAsync(int id)
+        public async Task<CreatorModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<CreatorModel>(await _creatorRepository.GetByIdAsync(id));
         }
 
-        public Task UpdateAsync(CreatorModel model)
+        public async Task UpdateAsync(CreatorModel model)
         {
-            throw new NotImplementedException();
+            ArgumentNullException.ThrowIfNull(model);
+
+            var entity = await _creatorRepository.GetByIdAsync(model.Id);
+            _creatorRepository.Update(entity);
+            await _creatorRepository.SaveChangesAsync();
         }
     }
 }

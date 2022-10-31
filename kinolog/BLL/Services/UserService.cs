@@ -20,7 +20,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<UserModel> GetByIdAsync(int id)
+        public Task<UserModel> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
