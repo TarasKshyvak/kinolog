@@ -1,4 +1,4 @@
-﻿using BLL.Interfaces;
+using BLL.Interfaces;
 using BLL.Models;
 
 namespace BLL.Services
@@ -19,7 +19,7 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
-
+        
         public Task<CountryModel> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
