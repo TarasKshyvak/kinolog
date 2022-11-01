@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BLL.Models;
+using FluentValidation;
 
 namespace BLL.Validators
 {
-    public class MovieNameModelValidator
+    public class MovieNameModelValidator : AbstractValidator<MovieNameModel>
     {
-
+        public MovieNameModelValidator()
+        {
+            RuleFor(movie => movie.Name)
+                .NotEmpty()
+                .WithMessage("Name is required field");
+        }
     }
 }
