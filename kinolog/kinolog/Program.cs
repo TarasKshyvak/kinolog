@@ -2,7 +2,9 @@ using AutoMapper;
 using BLL;
 using BLL.Interfaces;
 using BLL.Services;
+using BLL.Validators;
 using DAL.Data;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -12,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -42,6 +45,9 @@ builder.Services.AddSingleton(mapper);
 //BLL.Services
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICreatorService, CreatorService>();
+
+//fluent validation
+builder.Services.AddValidatorsFromAssemblyContaining<CreatorModelValidator>();
 
 var app = builder.Build();
 

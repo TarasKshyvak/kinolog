@@ -43,6 +43,17 @@ namespace BLL
                 .ForMember(gm => gm.CreatorsIds, opts =>
                     opts.MapFrom(g => g.Creators.Select(m => m.Id)))
                 .ReverseMap();
+
+            CreateMap<Position, PositionModel>().ReverseMap();
+
+            CreateMap<MovieCreator, MovieCreatorModel>()
+                .ForMember(mcm => mcm.Position, opts =>
+                    opts.MapFrom(mc => mc.Position.Name))
+                .ForMember(mcm => mcm.Movie, opts =>
+                    opts.MapFrom(mc => mc.Movie.Name))
+                .ForMember(mcm => mcm.Creator, opts =>
+                    opts.MapFrom(mc => mc.Creator.GetFullName()))
+                .ReverseMap();
         }
     }
 }

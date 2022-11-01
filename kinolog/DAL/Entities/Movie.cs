@@ -8,5 +8,6 @@
         public IEnumerable<Genre> Genres { get; set; } = null!;
         public IEnumerable<Rating> UsersRatings { get; set; } = null!;
         public IEnumerable<Creator> Creators { get; set; } = null!;
+        public IEnumerable<MovieCreator> MovieCreators { get; set; } = null!;
     }
 }

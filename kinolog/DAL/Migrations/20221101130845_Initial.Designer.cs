@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(KinologDbContext))]
-    [Migration("20221025141844_init")]
-    partial class init
+    [Migration("20221101130845_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,7 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -63,9 +64,11 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -84,6 +87,7 @@ namespace DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -98,6 +102,7 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -112,6 +117,7 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RatingId")
@@ -142,6 +148,10 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("MovieId");
+
                     b.HasIndex("PositionId")
                         .IsUnique();
 
@@ -157,6 +167,7 @@ namespace DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -198,12 +209,14 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -256,11 +269,27 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.MovieCreator", b =>
                 {
+                    b.HasOne("DAL.Entities.Creator", "Creator")
+                        .WithMany("MovieCreators")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.Movie", "Movie")
+                        .WithMany("MovieCreators")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Entities.Position", "Position")
                         .WithOne()
                         .HasForeignKey("DAL.Entities.MovieCreator", "PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Movie");
 
                     b.Navigation("Position");
                 });
@@ -315,6 +344,11 @@ namespace DAL.Migrations
                     b.Navigation("Creators");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Creator", b =>
+                {
+                    b.Navigation("MovieCreators");
+                });
+
             modelBuilder.Entity("DAL.Entities.Gender", b =>
                 {
                     b.Navigation("Users");
@@ -322,6 +356,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Movie", b =>
                 {
+                    b.Navigation("MovieCreators");
+
                     b.Navigation("UsersRatings");
                 });
 
