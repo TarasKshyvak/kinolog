@@ -8,8 +8,6 @@ namespace BLL.Validators
         public RatingModelValidator()
         {
             RuleFor(rating => rating.Mark)
-                //.NotEmpty()
-                //.WithMessage("")
                 .GreaterThan(0)
                 .LessThan(11);
 

@@ -11,7 +11,7 @@ namespace BLL.Validators
                 .NotEmpty()
                 .WithMessage("Position name is required")
                 .MinimumLength(4)
-                .WithMessage("Minimum length of position name is 5 characters");
+                .WithMessage("Minimum length of position name is 4 characters");
         }
     }
 }

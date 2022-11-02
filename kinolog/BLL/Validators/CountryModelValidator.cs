@@ -10,8 +10,8 @@ namespace BLL.Validators
             RuleFor(country => country.Name)
                 .NotEmpty()
                 .WithMessage("Country name is required field")
-                .MinimumLength(3)
-                .WithMessage("Minimum length of country name is 3 characters");
+                .MinimumLength(2)
+                .WithMessage("Minimum length of country name is 2 characters");
         }
     }
 }

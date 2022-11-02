@@ -9,11 +9,11 @@ namespace BLL.Validators
         {
             RuleFor(user => user.Username)
                 .NotEmpty()
-                .WithMessage("Ussername is required field")
+                .WithMessage("Username is required field")
                 .Must(name => name.Count() < 30)
-                .WithMessage("Ussername should be less than 30 sumbols")
+                .WithMessage("Username should be less than 30 symbols")
                 .Must(name => name.Count() > 1)
-                .WithMessage("Ussername should be over 1 symbols");
+                .WithMessage("Username should be over 1 symbols");
 
             RuleFor(user => user.BirthDate)
                 .NotEmpty()
