@@ -1,5 +1,6 @@
 ﻿using BLL.Interfaces;
 using BLL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace kinolog.Controllers
@@ -14,6 +15,14 @@ namespace kinolog.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _userService.Authenticate(model);
+            return Ok(response);
         }
 
         [HttpGet]

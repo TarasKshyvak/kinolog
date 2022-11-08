@@ -14,6 +14,7 @@ namespace DAL.Data
         public DbSet<Position> Positions { get; set; } = null!;
         public DbSet<Creator> Creators { get; set; } = null!;
         public DbSet<Country> Countries { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
         public KinologDbContext(DbContextOptions<KinologDbContext> options)
             : base(options)
         { }
@@ -51,6 +52,11 @@ namespace DAL.Data
                 .HasOne(cr => cr.Country)
                 .WithMany(co => co.Creators)
                 .HasForeignKey(cr => cr.CountryId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using BLL.Authorization;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -10,12 +12,13 @@ namespace BLL.Services
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
+        private readonly IJwtUtils _jwtUtils;
         private readonly UserRepository _userRepository;
 
-
-        public UserService(KinologDbContext context, IMapper mapper)
+        public UserService(KinologDbContext context, IMapper mapper, IJwtUtils jwtUtils)
         {
             _mapper = mapper;
+            _jwtUtils = jwtUtils;
             _userRepository = new UserRepository(context);
         }
 
@@ -26,6 +29,18 @@ namespace BLL.Services
 
             await _userRepository.AddAsync(entity);
             await _userRepository.SaveChangesAsync();
+        }
+
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        {
+            var user = await _userRepository.GetByUsername(model.Username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
+                throw new AppException("Username or password is incorrect");
+
+            var jwtToken = _jwtUtils.GenerateJwtToken(user);
+
+            return new AuthenticateResponse(user, jwtToken);
         }
 
         public async Task DeleteAsync(Guid modelId)
