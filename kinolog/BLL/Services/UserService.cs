@@ -59,7 +59,14 @@ namespace BLL.Services
 
         public async Task<UserModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<UserModel>(await _userRepository.GetByIdAsync(id));
+            try
+            { 
+                return _mapper.Map<UserModel>(await _userRepository.GetByIdAsync(id));
+            }
+            catch
+            {
+                throw new NotFoundException(id);
+            }
         }
 
         public async Task UpdateAsync(UserModel model)

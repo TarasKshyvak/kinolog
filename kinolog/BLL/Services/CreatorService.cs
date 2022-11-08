@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -43,7 +44,14 @@ namespace BLL.Services
 
         public async Task<CreatorModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CreatorModel>(await _creatorRepository.GetByIdAsync(id));
+            try
+            {
+                return _mapper.Map<CreatorModel>(await _creatorRepository.GetByIdAsync(id));
+            }
+            catch
+            {
+                throw new NotFoundException(id);
+            }
         }
 
         public async Task UpdateAsync(CreatorModel model)

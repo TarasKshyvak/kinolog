@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -44,7 +45,14 @@ namespace BLL.Services
 
         public async Task<CountryModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CountryModel>(await _countryRepository.GetByIdAsync(id));
+            try
+            {
+                return _mapper.Map<CountryModel>(await _countryRepository.GetByIdAsync(id));
+            }
+            catch
+            {
+                throw new NotFoundException(id);
+            }
         }
 
         public async Task UpdateAsync(CountryModel model)

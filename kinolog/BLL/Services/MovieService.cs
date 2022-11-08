@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -42,7 +43,14 @@ namespace BLL.Services
 
         public async Task<MovieModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<MovieModel>(await _movieRepository.GetByIdAsync(id));
+            try
+            {
+                return _mapper.Map<MovieModel>(await _movieRepository.GetByIdAsync(id));
+            }
+            catch
+            {
+                throw new NotFoundException(id);
+            }
         }
 
         public async Task UpdateAsync(MovieModel model)
