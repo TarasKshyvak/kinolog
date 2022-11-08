@@ -29,6 +29,13 @@ namespace DAL.Repositories
             return user;
         }
 
+        public async Task<User?> GetByUsername(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+
+            return user;
+        }
+
         public async Task AddAsync(User user)
         {
             await _context.AddAsync(user);
