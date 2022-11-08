@@ -28,7 +28,7 @@ namespace kinolog.Middleware
                     case NotFoundException ex:
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
-                    case BadRequestException ex:
+                    case AppException ex:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:
