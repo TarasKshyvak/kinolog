@@ -1,10 +1,13 @@
 using AutoMapper;
 using BLL;
+using BLL.Authorization;
+using BLL.Helpers;
 using BLL.Interfaces;
 using BLL.Services;
 using BLL.Validators;
 using DAL.Data;
 using FluentValidation;
+using kinolog.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -29,11 +32,11 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-//dbcontext
+// Db context
 builder.Services.AddDbContext<KinologDbContext>(opts => opts
     .UseSqlServer(builder.Configuration.GetConnectionString("kinolog")));
 
-//automapper
+// Automapper
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new AutomapperProfile());
@@ -42,11 +45,17 @@ var mapperConfig = new MapperConfiguration(mc =>
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-//BLL.Services
+// Strongly typed settings object
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+// BLL.Services
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICreatorService, CreatorService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
-//fluent validation
+// Fluent validation
 builder.Services.AddValidatorsFromAssemblyContaining<CreatorModelValidator>();
 
 var app = builder.Build();
@@ -56,6 +65,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(opts => opts.DocExpansion(DocExpansion.None));
 }
+
+// kinolog.Middleware
+app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 
