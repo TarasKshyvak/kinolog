@@ -31,6 +31,9 @@ namespace kinolog.Middleware
                     case AppException ex:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case ArgumentNullException ex:
+                        response.StatusCode = (int)HttpStatusCode.PreconditionRequired;
+                        break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
