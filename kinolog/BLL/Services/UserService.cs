@@ -46,7 +46,9 @@ namespace BLL.Services
         public async Task DeleteAsync(Guid modelId)
         {
             var entity = await _userRepository.GetByIdAsync(modelId);
-            ArgumentNullException.ThrowIfNull(entity);
+
+            if (entity == null)
+                throw new NotFoundException(modelId);
 
             await _userRepository.DeleteByIdAsync(modelId);
             await _userRepository.SaveChangesAsync();
@@ -59,7 +61,12 @@ namespace BLL.Services
 
         public async Task<UserModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<UserModel>(await _userRepository.GetByIdAsync(id));
+            var user = await _userRepository.GetByIdAsync(id);
+
+            if (user == null)
+                throw new NotFoundException();
+
+            return _mapper.Map<UserModel>(user);
         }
 
         public async Task UpdateAsync(UserModel model)
