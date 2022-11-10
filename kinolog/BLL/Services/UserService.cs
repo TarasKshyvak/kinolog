@@ -33,7 +33,7 @@ namespace BLL.Services
 
         public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
-            var user = await _userRepository.GetByUsername(model.Username);
+            var user = await _userRepository.GetByUsernameAsync(model.Username);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
                 throw new AppException("Username or password is incorrect");
@@ -65,6 +65,16 @@ namespace BLL.Services
 
             if (user == null)
                 throw new NotFoundException();
+
+            return _mapper.Map<UserModel>(user);
+        }
+
+        public async Task<UserModel> GetByUsernameAsync(string username)
+        {
+            var user = await _userRepository.GetByUsernameAsync(username);
+
+            if (user == null)
+                throw new NotFoundException(username);
 
             return _mapper.Map<UserModel>(user);
         }

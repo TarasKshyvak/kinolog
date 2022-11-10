@@ -37,6 +37,12 @@ namespace kinolog.Controllers
             return await _userService.GetByIdAsync(id);
         }
 
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserModel>> GetByUsername(string username)
+        {
+            return await _userService.GetByUsernameAsync(username);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] UserModel model)
         {

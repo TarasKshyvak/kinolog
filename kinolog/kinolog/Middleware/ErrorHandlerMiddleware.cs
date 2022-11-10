@@ -32,7 +32,7 @@ namespace kinolog.Middleware
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case ArgumentNullException ex:
-                        response.StatusCode = (int)HttpStatusCode.PreconditionRequired;
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
