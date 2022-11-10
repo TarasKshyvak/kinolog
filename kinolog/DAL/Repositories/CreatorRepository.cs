@@ -20,13 +20,10 @@ namespace DAL.Repositories
 
         public async Task<Creator> GetByIdAsync(Guid id)
         {
-            var creator = await _context.Creators
+            return (await _context.Creators
                 .Include(c => c.Country)
                 .Include(m => m.Movies)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            ArgumentNullException.ThrowIfNull(creator);
-            return creator;
+                .FirstOrDefaultAsync(c => c.Id == id))!;
         }
         
         public async Task AddAsync(Creator creator)
