@@ -20,12 +20,9 @@ namespace DAL.Repositories
 
         public async Task<Country> GetByIdAsync(Guid id)
         {
-            var country = await _context.Countries
+            return (await _context.Countries
                 .Include(c => c.Creators)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            ArgumentNullException.ThrowIfNull(country);
-            return country;
+                .FirstOrDefaultAsync(c => c.Id == id))!;
         }
 
         public async Task AddAsync(Country country)
