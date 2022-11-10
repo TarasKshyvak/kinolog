@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -29,7 +30,8 @@ namespace BLL.Services
         public async Task DeleteAsync(Guid modelId)
         {
             var entity = _movieRepository.GetByIdAsync(modelId);
-            ArgumentNullException.ThrowIfNull(entity);
+            if (entity == null)
+                throw new NotFoundException(modelId);
 
             await _movieRepository.DeleteByIdAsync(modelId);
             await _movieRepository.SaveChangesAsync();
@@ -42,7 +44,12 @@ namespace BLL.Services
 
         public async Task<MovieModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<MovieModel>(await _movieRepository.GetByIdAsync(id));
+            var movie = await _movieRepository.GetByIdAsync(id);
+
+            if (movie == null)
+                throw new NotFoundException();
+
+            return _mapper.Map<MovieModel>(movie);
         }
 
         public async Task UpdateAsync(MovieModel model)

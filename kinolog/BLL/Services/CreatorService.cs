@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using DAL.Data;
@@ -30,7 +31,8 @@ namespace BLL.Services
         public async Task DeleteAsync(Guid modelId)
         {
             var entity = await _creatorRepository.GetByIdAsync(modelId);
-            ArgumentNullException.ThrowIfNull(entity);
+            if (entity == null)
+                throw new NotFoundException(modelId);
 
             await _creatorRepository.DeleteByIdAsync(modelId);
             await _creatorRepository.SaveChangesAsync();
@@ -43,7 +45,12 @@ namespace BLL.Services
 
         public async Task<CreatorModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<CreatorModel>(await _creatorRepository.GetByIdAsync(id));
+            var creator = await _creatorRepository.GetByIdAsync(id);
+
+            if (creator == null)
+                throw new NotFoundException();
+
+            return _mapper.Map<CreatorModel>(creator);
         }
 
         public async Task UpdateAsync(CreatorModel model)
