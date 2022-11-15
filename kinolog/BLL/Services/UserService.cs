@@ -25,7 +25,15 @@ namespace BLL.Services
         public async Task AddAsync(UserModel model)
         {
             ArgumentNullException.ThrowIfNull(model);
+
+            var checkUser = await _userRepository.GetByUsernameAsync(model.Username);
+
+            if (checkUser != null)
+                throw new AppException($"Username \"{checkUser.Username}\" is not available");
+
             var entity = _mapper.Map<User>(model);
+
+            entity.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
             await _userRepository.AddAsync(entity);
             await _userRepository.SaveChangesAsync();
