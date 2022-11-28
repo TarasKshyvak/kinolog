@@ -29,9 +29,6 @@ namespace BLL.Validators
             RuleFor(user => user.Gender)
                 .NotEmpty()
                 .WithMessage("Gender field is required");
-
-            RuleFor(user => user.MoviesRatings)
-                .NotEmpty();
         }
     }
 }

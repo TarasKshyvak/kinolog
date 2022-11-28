@@ -11,10 +11,12 @@ namespace kinolog.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -28,24 +30,28 @@ namespace kinolog.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetAll()
         {
+            _logger.LogInformation("Getting all users");
             return (await _userService.GetAllAsync()).ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:Guid}")]
         public async Task<ActionResult<UserModel>> GetById(Guid id)
         {
+            _logger.LogInformation($"Getting user by id:{id}");
             return await _userService.GetByIdAsync(id);
         }
 
         [HttpGet("{username}")]
         public async Task<ActionResult<UserModel>> GetByUsername(string username)
         {
+            _logger.LogInformation($"Getting user by username:{username}");
             return await _userService.GetByUsernameAsync(username);
         }
 
         [HttpPost]
         public async Task<ActionResult> Add([FromBody] UserModel model)
         {
+            _logger.LogInformation("Adding a new user");
             await _userService.AddAsync(model);
             return Ok(model);
         }
