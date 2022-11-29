@@ -7,11 +7,11 @@ namespace kinolog.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class CountryController : ControllerBase
+    public class CountriesController : ControllerBase
     {
         private readonly ICountryService _countryService;
 
-        public CountryController(ICountryService countryService)
+        public CountriesController(ICountryService countryService)
         {
             _countryService = countryService;
         }
