@@ -47,7 +47,7 @@ namespace BLL.Services
             var movie = await _movieRepository.GetByIdAsync(id);
 
             if (movie == null)
-                throw new NotFoundException();
+                throw new NotFoundException(id);
 
             return _mapper.Map<MovieModel>(movie);
         }

@@ -4,6 +4,6 @@ namespace DAL.Interfaces
 {
     public interface ICountryRepository : IRepository<Country>
     {
-
+        Task SaveChangesAsync();
     }
 }

@@ -40,8 +40,8 @@ namespace BLL
                 .ReverseMap();
 
             CreateMap<Country, CountryModel>()
-                .ForMember(gm => gm.CreatorsIds, opts =>
-                    opts.MapFrom(g => g.Creators.Select(m => m.Id)))
+                .ForMember(cm => cm.CreatorsIds, opts =>
+                    opts.MapFrom(g => g.Creators!.Select(m => m.Id)))
                 .ReverseMap();
 
             CreateMap<Position, PositionModel>().ReverseMap();

@@ -31,6 +31,7 @@ namespace BLL.Services
         public async Task DeleteAsync(Guid modelId)
         {
             var entity = await _creatorRepository.GetByIdAsync(modelId);
+
             if (entity == null)
                 throw new NotFoundException(modelId);
 
@@ -48,7 +49,7 @@ namespace BLL.Services
             var creator = await _creatorRepository.GetByIdAsync(id);
 
             if (creator == null)
-                throw new NotFoundException();
+                throw new NotFoundException(id);
 
             return _mapper.Map<CreatorModel>(creator);
         }

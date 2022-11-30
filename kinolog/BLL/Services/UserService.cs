@@ -72,7 +72,7 @@ namespace BLL.Services
             var user = await _userRepository.GetByIdAsync(id);
 
             if (user == null)
-                throw new NotFoundException();
+                throw new NotFoundException(id);
 
             return _mapper.Map<UserModel>(user);
         }
@@ -82,7 +82,7 @@ namespace BLL.Services
             var user = await _userRepository.GetByUsernameAsync(username);
 
             if (user == null)
-                throw new NotFoundException(username);
+                throw new NotFoundException($"User with username {username} is not found");
 
             return _mapper.Map<UserModel>(user);
         }
