@@ -6,8 +6,8 @@
         public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;
         public DateTime BirthDate { get; set; }
-        public string Gender { get; set; } = null!;
-        public IEnumerable<RatingModel> MoviesRatings { get; set; } = null!;
+        public int GenderId { get; set; }
+        public IEnumerable<RatingModel>? MoviesRatings { get; set; } = null!;
         public string Password { get; set; } = string.Empty;
     }
 }

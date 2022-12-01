@@ -34,10 +34,7 @@ namespace BLL
                     opts.MapFrom(c => c.Country.Name))
                 .ReverseMap();
 
-            CreateMap<User, UserModel>()
-                .ForMember(um => um.Gender, opts =>
-                    opts.MapFrom(g => g.Gender.Name))
-                .ReverseMap();
+            CreateMap<User, UserModel>().ReverseMap();
 
             CreateMap<Country, CountryModel>()
                 .ForMember(cm => cm.CreatorsIds, opts =>

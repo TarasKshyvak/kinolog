@@ -26,7 +26,7 @@ namespace BLL.Validators
                 .NotEmpty()
                 .WithMessage("Email field is required");
 
-            RuleFor(user => user.Gender)
+            RuleFor(user => user.GenderId)
                 .NotEmpty()
                 .WithMessage("Gender field is required");
         }

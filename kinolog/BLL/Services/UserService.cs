@@ -29,7 +29,10 @@ namespace BLL.Services
             var checkUser = await _userRepository.GetByUsernameAsync(model.Username);
 
             if (checkUser != null)
-                throw new AppException($"Username \"{checkUser.Username}\" is not available");
+                throw new AppException($"Username '{checkUser.Username}' is not available");
+
+            if (!await _userRepository.CheckEmail(model.Email))
+                throw new AppException($"Email {model.Email} is already assigned to another user");
 
             var entity = _mapper.Map<User>(model);
 

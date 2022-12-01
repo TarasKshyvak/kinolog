@@ -57,5 +57,15 @@ namespace DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async ValueTask<bool> CheckEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

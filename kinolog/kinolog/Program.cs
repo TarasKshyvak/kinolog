@@ -27,6 +27,18 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            policy =>
+            {
+                policy.SetIsOriginAllowed((host) => true)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+    });
+
     builder.Services.AddControllers();
 
     builder.Logging.ClearProviders();
@@ -108,6 +120,8 @@ try
     app.UseMiddleware<JwtMiddleware>();
 
     app.UseHttpsRedirection();
+
+    app.UseCors();
 
     app.UseAuthorization();
 
