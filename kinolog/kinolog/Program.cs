@@ -19,6 +19,7 @@ using NLog;
 using NLog.Web;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Info("init main");
@@ -39,7 +40,9 @@ try
             });
     });
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();

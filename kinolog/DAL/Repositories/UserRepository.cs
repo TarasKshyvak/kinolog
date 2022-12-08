@@ -21,14 +21,18 @@ namespace DAL.Repositories
         public async Task<User> GetByIdAsync(Guid id)
         {
             return (await _context.Users
-                .Include(c => c.Gender)
-                .Include(r => r.MoviesRatings)
+                .Include(u => u.Gender)
+                .Include(u => u.Role)
+                .Include(u => u.MoviesRatings)
                 .FirstOrDefaultAsync(c => c.Id == id))!;
         }
 
         public async Task<User?> GetByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await _context.Users
+                .Include(u => u.Gender)
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task AddAsync(User user)
