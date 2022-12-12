@@ -34,8 +34,11 @@ namespace BLL.Services
             if (!await _userRepository.CheckEmail(model.Email))
                 throw new AppException($"Email {model.Email} is already assigned to another user");
 
-            var entity = _mapper.Map<User>(model);
+            //User role
+            model.RoleId = Guid.Parse("ABCDEF13-165B-4D9D-CF76-08DAD38D26CC");
 
+            var entity = _mapper.Map<User>(model);
+           
             entity.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
             await _userRepository.AddAsync(entity);

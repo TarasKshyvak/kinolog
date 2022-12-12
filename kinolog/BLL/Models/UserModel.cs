@@ -7,6 +7,7 @@
         public string Email { get; set; } = null!;
         public DateTime BirthDate { get; set; }
         public int GenderId { get; set; }
+        public Guid? RoleId { get; set; }
         public IEnumerable<RatingModel>? MoviesRatings { get; set; } = null!;
         public string Password { get; set; } = string.Empty;
     }
