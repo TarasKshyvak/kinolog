@@ -79,7 +79,6 @@ try
     // Strongly typed settings object
     builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-
     // MediatR
     builder.Services.AddMediatR(typeof(GetAllCountriesHandler).GetTypeInfo().Assembly);
 
