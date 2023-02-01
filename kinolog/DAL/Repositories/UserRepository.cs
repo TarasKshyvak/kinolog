@@ -24,7 +24,7 @@ namespace DAL.Repositories
                 .Include(u => u.Gender)
                 .Include(u => u.Role)
                 .Include(u => u.MoviesRatings)
-                .FirstOrDefaultAsync(c => c.Id == id))!;
+                .FirstOrDefaultAsync(u => u.Id == id))!;
         }
 
         public async Task<User?> GetByUsernameAsync(string username)

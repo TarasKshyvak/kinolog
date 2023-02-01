@@ -43,7 +43,7 @@ try
     builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-
+    // logging
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
